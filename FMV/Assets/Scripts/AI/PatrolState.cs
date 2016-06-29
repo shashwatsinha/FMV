@@ -56,8 +56,11 @@ public class PatrolState : IEnemyState {
            // Debug.Log(hit.collider.name);
             if (hit.collider.tag == "Player")
             {
-                enemy.chaseTarget = hit.transform;
-                ToChaseState();
+                if (enemy.player.GetComponent<Movement>().area == Area.LIGHT)
+                {
+                    enemy.chaseTarget = hit.transform;
+                    ToChaseState();
+                }
             }
         }
       

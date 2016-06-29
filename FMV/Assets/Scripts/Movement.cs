@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-enum Movable { RUN, SING};
-enum Area { LIGHT, DARK };
+public enum Movable { RUN, SING};
+public enum Area { LIGHT, DARK };
 
 public class Movement : MonoBehaviour {
 
@@ -14,8 +14,8 @@ public class Movement : MonoBehaviour {
     float TimeToSing = 5.0f;
     float TimeSinging = 5.0f;
     private Rigidbody2D rb2d;
-    Movable move;
-    Area area;
+    public Movable move;
+    public Area area;
     // Use this for initialization
     void Start()
     {
@@ -103,7 +103,10 @@ public class Movement : MonoBehaviour {
             grounded = true;
         }
 
-       
+       if(col.gameObject.tag=="Enemy")
+        {
+            Application.LoadLevel(Application.loadedLevel);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -117,7 +120,26 @@ public class Movement : MonoBehaviour {
         {
             area = Area.DARK;
         }
+
+    
     }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+      //  if (col.gameObject.tag == "Light")
+        {
+       //     area = Area.DARK;
+        }
+
+        if (col.gameObject.tag == "Dark")
+        {
+            area = Area.LIGHT;
+        }
+
+   
+    }
+
+   
 
     void Sing()
     {

@@ -5,7 +5,7 @@ public class EnemyAIManager : MonoBehaviour {
 
     public Transform eyes;
     public int patrolSpeed;
-    public Transform player;
+    public GameObject player;
     public int chaseSpeed;
     public Transform leftBoundary;
     public Transform rightBoundary;
@@ -22,6 +22,7 @@ public class EnemyAIManager : MonoBehaviour {
         chaseState = new ChaseState(this);
         alertState = new AlertState(this);
         patrolState = new PatrolState(this);
+        player = GameObject.FindGameObjectWithTag("Player");
     }
     void Start ()
     {

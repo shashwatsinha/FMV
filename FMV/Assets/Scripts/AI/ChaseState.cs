@@ -14,9 +14,10 @@ public class ChaseState : IEnemyState
 
     public void UpdateState()
     {
-        Debug.Log("in chase");
+        //Debug.Log("in chase");
         Look();
         Chase();
+
     }
 
     public void OnTriggerEnter2D(Collider2D other)
@@ -36,7 +37,7 @@ public class ChaseState : IEnemyState
     {
         //enemy.patrolSpeed *= -1;
         //enemy.patrolSpeed = -6;
-        Debug.Log("patrol state");
+        //Debug.Log("patrol state");
         enemy.currentState = enemy.patrolState;
     }
 
@@ -52,6 +53,13 @@ public class ChaseState : IEnemyState
 
     public void Look()
     {
+
+        if (enemy.player.GetComponent<Movement>().area == Area.DARK)
+        {
+            Debug.Log("Going in patrol as player in dark");
+            ToPatrolState();
+        }
+
         RaycastHit2D hit = Physics2D.Raycast(enemy.eyes.transform.position, enemy.a, 10, 1 << LayerMask.NameToLayer("Player"));
         if (hit)
         {
@@ -78,6 +86,7 @@ public class ChaseState : IEnemyState
         if(
            ((enemy.player.transform.position.x < enemy.leftBoundary.transform.position.x) || (enemy.player.transform.position.x > enemy.rightBoundary.transform.position.x)))
             ToPatrolState();
+
        // enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
 
     }
