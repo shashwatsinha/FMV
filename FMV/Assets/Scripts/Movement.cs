@@ -79,14 +79,14 @@ public class Movement : MonoBehaviour {
             if (grounded)
                 transform.Translate(new Vector3(speed * Time.deltaTime, 0, 0));
             else
-                transform.Translate(new Vector3(speed / 5 * Time.deltaTime, 0, 0));
+                transform.Translate(new Vector3(speed / 2 * Time.deltaTime, 0, 0));
         }
         else if (Input.GetKey(KeyCode.A))
         {
             if (grounded)
                 transform.Translate(new Vector3(-speed * Time.deltaTime, 0, 0));
             else
-                transform.Translate(new Vector3(-speed / 5 * Time.deltaTime, 0, 0));
+                transform.Translate(new Vector3(-speed / 2 * Time.deltaTime, 0, 0));
         }
 
         if ((Input.GetKeyDown(KeyCode.W)) && grounded == true)
