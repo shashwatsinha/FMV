@@ -6,7 +6,7 @@ public enum Area { LIGHT, DARK };
 
 public class Movement : MonoBehaviour {
 
-    public float speed = 5.0f;
+    public float speed = 4.0f;
     public float jumpSpeed = 5.0f;
     private bool grounded;
     float singMeter;
@@ -79,14 +79,14 @@ public class Movement : MonoBehaviour {
             if (grounded)
                 transform.Translate(new Vector3(speed * Time.deltaTime, 0, 0));
             else
-                transform.Translate(new Vector3(speed / 2 * Time.deltaTime, 0, 0));
+                transform.Translate(new Vector3(speed  * Time.deltaTime, 0, 0));
         }
         else if (Input.GetKey(KeyCode.A))
         {
             if (grounded)
                 transform.Translate(new Vector3(-speed * Time.deltaTime, 0, 0));
             else
-                transform.Translate(new Vector3(-speed / 2 * Time.deltaTime, 0, 0));
+                transform.Translate(new Vector3(-speed  * Time.deltaTime, 0, 0));
         }
 
         if ((Input.GetKeyDown(KeyCode.W)) && grounded == true)
@@ -106,6 +106,14 @@ public class Movement : MonoBehaviour {
        if(col.gameObject.tag=="Enemy")
         {
             Application.LoadLevel(Application.loadedLevel);
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Ground")
+        {
+            grounded = false;
         }
     }
 

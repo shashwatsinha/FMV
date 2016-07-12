@@ -5,7 +5,7 @@ public class ChaseState : IEnemyState
 {
 
     private readonly EnemyAIManager enemy;
-
+    public int speed = 10;
 
     public ChaseState(EnemyAIManager statePatternEnemy)
     {
@@ -14,16 +14,13 @@ public class ChaseState : IEnemyState
 
     public void UpdateState()
     {
-        //Debug.Log("in chase");
         Look();
         Chase();
-
+        Debug.Log("state:chase");
     }
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        //enemy.chaseSpeed = 0;
-        //enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         if (other.gameObject.tag == "Boundary")
         {
             enemy.patrolSpeed *= -1;
@@ -35,9 +32,7 @@ public class ChaseState : IEnemyState
 
     public void ToPatrolState()
     {
-        //enemy.patrolSpeed *= -1;
-        //enemy.patrolSpeed = -6;
-        //Debug.Log("patrol state");
+
         enemy.currentState = enemy.patrolState;
     }
 
@@ -63,11 +58,9 @@ public class ChaseState : IEnemyState
         RaycastHit2D hit = Physics2D.Raycast(enemy.eyes.transform.position, enemy.a, 10, 1 << LayerMask.NameToLayer("Player"));
         if (hit)
         {
-            // Debug.Log(hit.collider.name);
             if (hit.collider.tag == "Player")
             {
                 enemy.chaseTarget = hit.transform;
-                //ToChaseState();
             }
 
             
@@ -82,23 +75,21 @@ public class ChaseState : IEnemyState
     public void Stop()
     {
         Debug.Log("stopping");
-        //enemy.chaseSpeed = enemy.patrolSpeed;
         if(
            ((enemy.player.transform.position.x < enemy.leftBoundary.transform.position.x) || (enemy.player.transform.position.x > enemy.rightBoundary.transform.position.x)))
             ToPatrolState();
 
-       // enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
 
     }
     private void Chase()
     {
         if (enemy.player.transform.position.x > enemy.transform.position.x)
         {
-            enemy.chaseSpeed = 6;
+            enemy.chaseSpeed = speed;
         }
 
         else
-            enemy.chaseSpeed = -6;
+            enemy.chaseSpeed = -speed;
         enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(enemy.chaseSpeed, 0);
     }
 
